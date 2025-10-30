@@ -33,3 +33,10 @@ If you want TrueNAS to automatically load the driver after startup:
 > **Note:**  
 > Because the **TrueNAS SCALE root filesystem is mounted read-only**, you cannot permanently install the module under  
 > `/lib/modules/` or modify system boot configuration files.  
+
+
+License
+
+This repository is provided as-is for personal use.
+The original QNAP8528 driver source is available at:
+https://github.com/0xGiddi/qnap8528
