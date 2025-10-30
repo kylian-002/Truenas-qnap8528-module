@@ -1,0 +1,14 @@
+services:
+  qnap8528-builder:
+    image: debian:trixie
+    container_name: qnap8528-builder
+    privileged: true
+    volumes:
+      - /usr/src:/usr/src:ro         # host kernel headers
+      - /lib/modules:/lib/modules:ro # kernel symbols
+      - .:/workspace                 # shared project directory
+    working_dir: /workspace
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["bash", "/workspace/build-driver.sh"]
