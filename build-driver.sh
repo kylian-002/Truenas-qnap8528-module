@@ -13,10 +13,22 @@ else
     cd ../..
 fi
 
-echo "[3/3] Building kernel module..."
-cd build/qnap8528/src
+echo "[3/3] Locating production kernel headers..."
+# Search for either versioned or unversioned production headers
+KERN_HEADERS=$(find /usr/src -maxdepth 1 -type d \
+    \( -name "linux-headers-*-production+truenas" -o -name "linux-headers-truenas-production-amd64" \) \
+    | head -n 1)
 
-make -C /usr/src/linux-headers-truenas-production-amd64 M=$(pwd)
+if [ -z "$KERN_HEADERS" ]; then
+    echo "Error: Could not find production kernel headers in /usr/src"
+    exit 1
+fi
+
+echo "Using kernel headers: $KERN_HEADERS"
+
+echo "[4/4] Building kernel module..."
+cd build/qnap8528/src
+make -C "$KERN_HEADERS" M=$(pwd)
 
 cd ../../..
 if [ -f build/qnap8528/src/qnap8528.ko ]; then
@@ -26,3 +38,4 @@ else
     echo "Error: qnap8528.ko not found in src/. Build may have failed."
     exit 1
 fi
+
