@@ -1,0 +1,17 @@
+services:
+  fan-controller:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fan-controller
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /sys:/sys:rw       # Needed to read temps and write PWM
+    environment:
+      - TEMP_LOW=35
+      - TEMP_HIGH=65
+      - PWM_MIN=30
+      - PWM_MAX=255
+      - SLEEP_INTERVAL=5
+

@@ -1,0 +1,9 @@
+FROM python:3.12-slim
+
+RUN pip install psutil
+
+COPY fan-controller.py /app/fan-controller.py
+WORKDIR /app
+
+CMD ["python", "-u", "fan-controller.py"]
+
